@@ -86,5 +86,4 @@ void load_map(char const *file_path, data_t *data)
         exit (84);
     }
     find_hole_coor(data);
-    free(data->buffer);
 }

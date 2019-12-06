@@ -20,6 +20,8 @@ typedef struct coor_s
     int perso_x;
     int perso_y;
     int **hole;
+    int window_x;
+    int window_y;
 } coor_t;
 
 typedef struct data_s
@@ -28,6 +30,7 @@ typedef struct data_s
     char *buffer;
     char **map;
     char **map_cpy;
+    char *resize_msg;
     int row;
     int col;
     int nb_perso;

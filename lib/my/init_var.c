@@ -19,4 +19,7 @@ void init_var(data_t *data)
     data->nb_hole = 0;
     data->nb_box = 0;
     data->coor.hole = NULL;
+    data->coor.window_x = 0;
+    data->coor.window_y = 0;
+    data->resize_msg = "Resize window";
 }

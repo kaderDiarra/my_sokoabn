@@ -25,7 +25,7 @@ void verif_win(data_t *data)
     }
     if (counter == data->nb_hole){
         endwin();
-        exit (1);
+        exit (0);
     }
 }
 
@@ -42,5 +42,11 @@ void game_instruction(data_t *data)
 {
     get_coor(data);
     move_pos(data);
-    display_map(data);
+    getmaxyx(stdscr, data->coor.window_x, data->coor.window_y);
+    if (data->coor.window_x < data->row || data->coor.window_y < data->col){
+        clear();
+        mvprintw(data->coor.window_x / 2, ((data->coor.window_y -
+        my_strlen(data->resize_msg))/ 2), data->resize_msg);
+    } else
+        display_map(data);
 }
