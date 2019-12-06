@@ -7,15 +7,35 @@
 
 #include "my.h"
 
+void verif_hole(data_t *data)
+{
+    for (int i = 0; i < data->nb_hole; i++){
+        if (data->map[data->coor.hole[i][0]][data->coor.hole[i][1]] == ' ')
+            data->map[data->coor.hole[i][0]][data->coor.hole[i][1]] = 'O';
+    }
+}
+
+void verif_win(data_t *data)
+{
+    int counter = 0;
+
+    for (int i = 0; i < data->nb_hole; i++){
+        if (data->map[data->coor.hole[i][0]][data->coor.hole[i][1]] == 'X')
+            counter++;
+    }
+    if (counter == data->nb_hole){
+        endwin();
+        exit (1);
+    }
+}
+
 void display_map(data_t *data)
 {
     clear();
-    for (int k = 0; k < data->nb_hole; k++){
-        if (data->map[data->coor.hole[k][0]][data->coor.hole[k][1]] == ' ')
-            data->map[data->coor.hole[k][0]][data->coor.hole[k][1]] = 'O';
-    }
+    verif_hole(data);
     for (int i = 0; i < data->row; i++)
         printw("%s", data->map[i]);
+    verif_win(data);
 }
 
 void game_instruction(data_t *data)

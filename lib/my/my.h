@@ -25,7 +25,9 @@ typedef struct coor_s
 typedef struct data_s
 {
     int button;
+    char *buffer;
     char **map;
+    char **map_cpy;
     int row;
     int col;
     int nb_perso;
@@ -43,7 +45,7 @@ char **mem_alloc_2d_array(int nb_rows, int nb_cols);
 void load_map(char const *file_path, data_t *data);
 void init_var(data_t *data);
 void game_instruction(data_t *data);
-void event_gestion(data_t *data);
+void event_gestion(data_t *data, char *av);
 int get_coor(data_t *data);
 void move_pos(data_t *data);
 void move_perso(data_t *data);
@@ -56,5 +58,6 @@ int **mem_alloc_2d_int_arr(int nb_row, int nb_col);
 void free_variable(data_t *data);
 void free_2d_int_array(int **arr, int nb_row);
 void free_2d_char_array(char **arr, int nb_row);
+char **fill_arr(data_t *data);
 
 #endif

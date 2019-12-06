@@ -43,7 +43,7 @@ all:	$(NAME) COMPILE
 
 $(NAME):	$(OBJ)
 	ar rc $(NAME) $(OBJ)
-	cp $(NAME) ../
+	mkdir ../../include
 	cp $(INCLUDE) ../../include
 
 COMPILE:
@@ -53,8 +53,8 @@ clean:
 	rm -f $(OBJ)
 
 fclean:	clean
-	rm -f ../$(NAME) $(NAME)
-	rm -f ../../include/$(INCLUDE)
+	rm -f $(NAME)
+	rm -rf ../../include
 	rm -f $(BIN)
 
 re:	fclean all

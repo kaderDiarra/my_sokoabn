@@ -7,29 +7,31 @@
 
 #include "my.h"
 
-static char *map_in_buff(char const *file_path, int size)
+static int map_in_buff(data_t *data, char const *file_path, int size)
 {
     int fd = open(file_path, O_RDONLY);
-    char *buffer = malloc(sizeof(char) * (size + 1));
+    data->buffer = malloc(sizeof(char) * (size + 1));
     int bytes_read = 0;
 
-    if (fd == -1 || buffer == NULL){
+    if (fd == -1 || data->buffer == NULL){
         endwin();
         exit (84);
     }
-    buffer[size + 1] = '\0';
-    bytes_read = read(fd, buffer, size);
-    if (buffer[size - 1] == '\0')
-        return (buffer);
-    map_in_buff(file_path, (size + 1));
+    data->buffer[size + 1] = '\0';
+    bytes_read = read(fd, data->buffer, size);
+    if (data->buffer[size - 1] == '\0'){
+        close(fd);
+        return (1);
+    }
+    map_in_buff(data, file_path, (size + 1));
 }
 
-static void nb_col_row(char *buffer, data_t *data)
+static void nb_col_row(data_t *data)
 {
     int tmp = 0;
 
-    for (int i = 0; buffer[i] != '\0'; i++){
-        if (buffer[i] == '\n'){
+    for (int i = 0; data->buffer[i] != '\0'; i++){
+        if (data->buffer[i] == '\n'){
             data->row += 1;
             tmp += 1;
             if (tmp > data->col)
@@ -44,7 +46,7 @@ static void nb_col_row(char *buffer, data_t *data)
     }
 }
 
-static char **fill_arr(char *buffer, data_t *data)
+char **fill_arr(data_t *data)
 {
     char **arr = mem_alloc_2d_array(data->row, data->col);
     int k = 0;
@@ -55,7 +57,7 @@ static char **fill_arr(char *buffer, data_t *data)
     }
     for (int i = 0; i < data->row; i++){
         for (int j = 0; j < data->col; j++){
-            arr[i][j] = buffer[k];
+            arr[i][j] = data->buffer[k];
             error_management(data, arr, i, j);
             if (arr[i][j] == '\n'){
                 j = data->col -1;
@@ -68,11 +70,12 @@ static char **fill_arr(char *buffer, data_t *data)
 
 void load_map(char const *file_path, data_t *data)
 {
-    char *buffer;
+    int test = 0;
 
-    buffer = map_in_buff(file_path, 1);
-    nb_col_row(buffer, data);
-    data->map = fill_arr(buffer, data);
+    data->buffer = NULL;
+    test = map_in_buff(data, file_path, 1);
+    nb_col_row(data);
+    data->map = fill_arr(data);
     if (data->nb_perso < 1){
         endwin();
         exit (84);
@@ -83,5 +86,5 @@ void load_map(char const *file_path, data_t *data)
         exit (84);
     }
     find_hole_coor(data);
-    free(buffer);
+    free(data->buffer);
 }
