@@ -6,7 +6,6 @@
 */
 
 #include "my.h"
-#include <stdio.h>
 
 static char *map_in_buff(char const *file_path, int size)
 {
@@ -14,8 +13,10 @@ static char *map_in_buff(char const *file_path, int size)
     char *buffer = malloc(sizeof(char) * (size + 1));
     int bytes_read = 0;
 
-    if (fd == -1 || buffer == NULL)
+    if (fd == -1 || buffer == NULL){
+        endwin();
         exit (84);
+    }
     buffer[size + 1] = '\0';
     bytes_read = read(fd, buffer, size);
     if (buffer[size - 1] == '\0')
@@ -37,6 +38,10 @@ static void nb_col_row(char *buffer, data_t *data)
         } else
             tmp += 1;
     }
+    if (data->row < 3 || data->col < 6){
+        endwin();
+        exit (84);
+    }
 }
 
 static char **fill_arr(char *buffer, data_t *data)
@@ -44,11 +49,14 @@ static char **fill_arr(char *buffer, data_t *data)
     char **arr = mem_alloc_2d_array(data->row, data->col);
     int k = 0;
 
-    if (arr == NULL)
+    if (arr == NULL){
+        endwin();
         exit (84);
+    }
     for (int i = 0; i < data->row; i++){
         for (int j = 0; j < data->col; j++){
             arr[i][j] = buffer[k];
+            error_management(data, arr, i, j);
             if (arr[i][j] == '\n'){
                 j = data->col -1;
             }
@@ -58,22 +66,6 @@ static char **fill_arr(char *buffer, data_t *data)
     return (arr);
 }
 
-void fill_blank(data_t *data)
-{
-    int tmp = 0;
-
-    for (int i = 0; i < data->row; i++){
-        for (int j = 0; j < data->col; j++){
-            if (data->map[i][j] == '\n' && j < data->col){
-                while (j < data->col){
-                    data->map[i][j] = '.';
-                    j++;
-                }
-            }
-        }
-    }
-}
-
 void load_map(char const *file_path, data_t *data)
 {
     char *buffer;
@@ -81,10 +73,15 @@ void load_map(char const *file_path, data_t *data)
     buffer = map_in_buff(file_path, 1);
     nb_col_row(buffer, data);
     data->map = fill_arr(buffer, data);
-    //fill_blank(data);
-    //printf("%s", data->map[0]);
-    //for (int i = 0; i < data->row; i++){
-    //    printf("%s", data->map[i]);
-    //}
+    if (data->nb_perso < 1){
+        endwin();
+        exit (84);
+    }
+    if (data->nb_hole > data->nb_box || data->nb_box == 0
+    || data->nb_hole == 0){
+        endwin();
+        exit (84);
+    }
+    find_hole_coor(data);
     free(buffer);
 }

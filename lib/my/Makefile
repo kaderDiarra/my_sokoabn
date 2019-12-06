@@ -17,7 +17,13 @@ SRC	=	init_var.c \
 		move_perso.c \
 		permission_to_move.c \
 		move_box.c \
-
+		error_management.c \
+		mem_alloc_2d_int_arr.c \
+		hole_management.c \
+		free_variable.c \
+		free_2d_array.c \
+		my_putstr.c \
+		my_putchar.c \
 
 OBJ	=	$(SRC:.c=.o)
 

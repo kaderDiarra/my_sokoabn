@@ -13,9 +13,10 @@ int main(int ac, char **av)
 
     print_help(ac, av[1]);
     initscr();
+    noecho();
+    curs_set(0);
     init_var(&data);
     load_map(av[1], &data);
-    //noecho();
     keypad(stdscr, TRUE);
     while (1){
         game_instruction(&data);
@@ -23,5 +24,6 @@ int main(int ac, char **av)
         refresh();
     }
     endwin();
-    //free_variable();
+    free_variable(&data);
+    return (0);
 }

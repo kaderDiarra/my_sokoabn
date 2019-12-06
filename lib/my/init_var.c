@@ -15,4 +15,8 @@ void init_var(data_t *data)
     data->col = 0;
     data->coor.perso_x = 0;
     data->coor.perso_y = 0;
+    data->nb_perso = 0;
+    data->nb_hole = 0;
+    data->nb_box = 0;
+    data->coor.hole = NULL;
 }

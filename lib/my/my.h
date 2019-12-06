@@ -19,6 +19,7 @@ typedef struct coor_s
 {
     int perso_x;
     int perso_y;
+    int **hole;
 } coor_t;
 
 typedef struct data_s
@@ -27,9 +28,14 @@ typedef struct data_s
     char **map;
     int row;
     int col;
+    int nb_perso;
+    int nb_hole;
+    int nb_box;
     coor_t coor;
 } data_t;
 
+void my_putchar(char c);
+int my_putstr(char const *str);
 int my_strlen(char const *str);
 int print_help(int ac, char *av);
 void init_var(data_t *data);
@@ -44,5 +50,11 @@ void move_perso(data_t *data);
 int map_limit(data_t *data);
 int meet_hole(data_t *data);
 void move_box(data_t *data);
+int error_management(data_t *data, char **arr, int i, int j);
+void find_hole_coor(data_t *data);
+int **mem_alloc_2d_int_arr(int nb_row, int nb_col);
+void free_variable(data_t *data);
+void free_2d_int_array(int **arr, int nb_row);
+void free_2d_char_array(char **arr, int nb_row);
 
 #endif

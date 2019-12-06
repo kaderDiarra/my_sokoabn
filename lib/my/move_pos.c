@@ -7,6 +7,8 @@
 
 #include "my.h"
 
+//map[hole[i][o_y]][hole[i][o_x]]
+
 void move_up(data_t *data)
 {
     if (map_limit(data) == 1){

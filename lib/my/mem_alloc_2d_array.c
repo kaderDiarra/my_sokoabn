@@ -6,7 +6,6 @@
 */
 
 #include "my.h"
-#include <stdlib.h>
 
 char **mem_alloc_2d_array(int nb_rows, int nb_cols)
 {
