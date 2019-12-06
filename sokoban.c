@@ -20,7 +20,7 @@ int main(int ac, char **av)
     keypad(stdscr, TRUE);
     while (1){
         game_instruction(&data);
-        event_gestion(&data, av[1]);
+        event_gestion(&data);
         refresh();
     }
     endwin();

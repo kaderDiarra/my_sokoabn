@@ -22,7 +22,7 @@ static void replay_game(data_t *data)
     }
 }
 
-void event_gestion(data_t *data, char *av)
+void event_gestion(data_t *data)
 {
     data->button = getch();
     if (data->button == ' '){

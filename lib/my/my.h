@@ -45,7 +45,7 @@ char **mem_alloc_2d_array(int nb_rows, int nb_cols);
 void load_map(char const *file_path, data_t *data);
 void init_var(data_t *data);
 void game_instruction(data_t *data);
-void event_gestion(data_t *data, char *av);
+void event_gestion(data_t *data);
 int get_coor(data_t *data);
 void move_pos(data_t *data);
 void move_perso(data_t *data);
