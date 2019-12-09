@@ -24,6 +24,8 @@ void verif_win(data_t *data)
             counter++;
     }
     if (counter == data->nb_hole){
+        for (int i = 0; i < data->row; i++)
+            printw("%s", data->map[i]);
         endwin();
         exit (0);
     }
