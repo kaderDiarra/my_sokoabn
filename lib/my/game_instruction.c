@@ -6,6 +6,7 @@
 */
 
 #include "my.h"
+static const char BOX =  'X';
 
 void verif_hole(data_t *data)
 {
@@ -20,7 +21,7 @@ void verif_win(data_t *data)
     int counter = 0;
 
     for (int i = 0; i < data->nb_hole; i++){
-        if (data->map[data->coor.hole[i][0]][data->coor.hole[i][1]] == 'X')
+        if (data->map[data->coor.hole[i][0]][data->coor.hole[i][1]] == BOX)
             counter++;
     }
     if (counter == data->nb_hole){
