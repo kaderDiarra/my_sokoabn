@@ -1,4 +1,4 @@
-# myRunner
+# my_sokoban
 Runner game
 
 The game is played on a board of squares, where each square is a floor or
